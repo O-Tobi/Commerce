@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Auctions{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'auctions/styles.css' %}" type="text/css" >
+    </head>
+    <body>
+        <h1 class="bighead">Auctions</h1>
+        <div>
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                Not signed in.
+            {% endif %}
+        </div>
+        <ul class="nav">
+            <li class="nav-item">
+                <!--ensure that when you click the active listings button, it brings out all the active listings available in the database-->
+                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+            </li>           
+            
+
+            <!-- put the category dropdown here in such a way that either you're logged in or out, you's still have access to the filter by category-->
+            {% if user.is_authenticated %}
+            <li>
+                <a class="nav-link" href="{% url 'listing' %}">New Auction</a>
+            </li>
+        
+            <!--add a watchlist button that takes you the watchlist.html page-->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'view_watchlist' %}">Watchlist</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+                
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+        <hr>
+        {% block body %}
+
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<h1>New Auction</h1>
+
+<div>
+    <!-- input the url of the page where you want it to be posted-->
+    <form action="{% url 'listing' %}" method="POST">
+
+        {% csrf_token %}
+        <div>
+            <label for="image">Title: </label>
+            <input autofocus class="form-control" type="text" name="title" placeholder="Enter item title">
+        </div>
+
+        <div>
+            <label for="image">Insert Image: </label>
+            <input autofocus class="form-control" type="url"  name="image_url" placeholder="Enter the image URL">
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <input autofocus class="form-control" type="text" name="description" placeholder="Enter Text" required>
+        </div>
+
+
+        <div>
+            <label for="starting_bid">Starting bid:</label>
+            <input autofocus class="form-control" type="number"  name="user_bid" min="0.00"  placeholder="Enter the price">
+        </div> <br>
+
+        <div>
+            <label for="category">Select a Category:</label>
+            <select name="category" id="category" required>
+                {% for category in categories %}
+
+                    <option value="{{ category }}"> {{ category }} </option>
+
+                {% endfor %}
+            
+            </select>
+        </div>
+
+        <div>
+            <input class="btn btn-primary" type="submit" value="Auction">
+        </div>
+    </form>
+</div>
+{% endblock %}
